@@ -3,13 +3,16 @@ from discord.ext import commands
 import asyncio
 import yt_dlp 
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
 #Config for the bot
 #=================================================================================
-TOKEN = "Your Token"
-#Remove Token
+TOKEN = os.getenv("TOKEN")
+
 yt_dl_options = {"format": "bestaudio/best"}
 ytdl = yt_dlp.YoutubeDL(yt_dl_options)
 
@@ -54,4 +57,4 @@ async def stop(interaction: discord.Interaction):
     except Exception as err:
         print(err)
    
-bot.run(TOKEN)     
+bot.run(TOKEN)   
