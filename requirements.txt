@@ -1,0 +1,4 @@
+discord
+discord.py
+yt-dlp
+python-dotenv
