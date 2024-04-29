@@ -8,8 +8,8 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
 #Config for the bot
 #=================================================================================
-TOKEN = "MTEzNTA4NTM3OTkwOTg0NTAxMg.GLKVbl.UUn6pgwJlyyT_bferMa-sdHy1bjB7c_VCAvY2U"
-
+TOKEN = "Your Token"
+#Remove Token
 yt_dl_options = {"format": "bestaudio/best"}
 ytdl = yt_dlp.YoutubeDL(yt_dl_options)
 
