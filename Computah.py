@@ -37,7 +37,7 @@ async def play(interaction: discord.Interaction, link: str):
         print(e)
 
     try:
-        await interaction.response.send_message(f"```♫ ➤ รอกูแป๊ปนึง แชท...```")
+        await interaction.response.send_message(f"```♫ ➤ Waiting...```")
         url = link
         loop = asyncio.get_event_loop()
         data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
@@ -53,7 +53,7 @@ async def stop(interaction: discord.Interaction):
     try:
         voice_clients[interaction.guild.id].stop()
         await voice_clients[interaction.guild.id].disconnect()
-        await interaction.response.send_message(f"```🞮 ไปแล่ว```")
+        await interaction.response.send_message(f"```🞮 Good bye```")
     except Exception as err:
         print(err)
    
