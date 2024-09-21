@@ -34,3 +34,19 @@ docker run --name <your-container-0> -e TOKEN=yourtokenblyat <img-name>
 จะไม่ใช้ docker ก็ได้ แล้วแต่ ตามใจ
 
 ---
+
+## Command
+```
+/play <youtube-link> - Play the music directly from youtube
+/stop - remove bot from the voice channel
+```
+
+<img src="https://i.ibb.co/6YWTC5r/Untitled.png" alt="Untitled" border="0">
+
+---
+
+## Screenshots
+
+<img src="https://i.ibb.co/99YFgKM/2341324.png" alt="2341324" border="0"/>
+
+---
