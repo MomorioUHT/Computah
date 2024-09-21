@@ -15,7 +15,6 @@ Requirements
 discord
 yt-dlp (Should always be the latest one :P)
 python-dotenv <- You can hard code the token here if you too lazy
-
 ```
 
 FFMpeg
