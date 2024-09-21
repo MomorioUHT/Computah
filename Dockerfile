@@ -1,13 +1,11 @@
-FROM python:3.12.2
+FROM python:3.12.6
 
-WORKDIR /app
+RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y \
-    ffmpeg
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+WORKDIR /usr/src/app
 
 COPY . .
+
+RUN pip install --no-cache-dir -r requirements.txt
 
 CMD ["python", "Computah.py"]

@@ -13,6 +13,10 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 #=================================================================================
 TOKEN = os.getenv("TOKEN")
 
+#if there is no token, exit...
+if not TOKEN:
+    raise ValueError("No TOKEN provided. Please set the TOKEN environment variable.")
+    
 yt_dl_options = {"format": "bestaudio/best"}
 ytdl = yt_dlp.YoutubeDL(yt_dl_options)
 
