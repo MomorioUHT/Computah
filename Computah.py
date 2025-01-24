@@ -3,6 +3,7 @@ from discord.ext import commands
 import asyncio
 import yt_dlp
 import os
+import random
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -39,6 +40,9 @@ async def on_ready():
     print(f"{bot.user} is currently idle!")
     print("===========================")
 
+
+#=============================
+#PLAY MUSIC
 
 async def play_song(interaction: discord.Interaction, song_url: str, voice_client: discord.VoiceClient):
     """
@@ -152,5 +156,75 @@ async def stop(interaction: discord.Interaction):
 
     except Exception as err:
         print(f"Error in /stop command: {err}")
+
+#=============================
+#RANDOM ROOM CREATIONS
+
+active_magical_channel = None
+
+# Default portal channel name
+PORTAL_NAME = '🪞Portal'
+
+# Magical theme channel names
+CHANNEL_NAMES = [
+    '🏫 Mysthaven Institute',
+    '📚 The Ethernal Archive',
+    '🏡 Emberwood Village',
+    '🌸 Moonblossom Boutique',
+    '🚂 Moonshadow Terminal',
+    '⚙️ Emberforge Steelworks',
+    '🚗 Moonshadow Lane',
+    '✨️ Dreamweaver Ways',
+    '⚓ Silverwave Pier',
+    '🏠 Verdant Hollow',
+    '⛰️ Whispering Abyss',
+    '🌊 Celestia Harbor',
+    '🍹 Arcane Island',
+    '🏰 Spectral Spire',
+    '🧱 Forsaken Labyrinth',
+]
+
+@bot.event
+async def on_voice_state_update(member, before, after):
+    global active_magical_channel
+
+    guild = member.guild
+    portal_channel = discord.utils.get(guild.voice_channels, name=PORTAL_NAME)
+
+    category_name = "🔮 AETHERIA DOMAIN"
+    category = discord.utils.get(guild.categories, name=category_name)
+
+    if not category:
+        print(f"Category '{category_name}' not found!")
+        return
+
+    # Case 1: First user joins -> create new portal
+    if portal_channel and after.channel == portal_channel:
+        magical_channel_name = random.choice(CHANNEL_NAMES)
+        magical_channel = await guild.create_voice_channel(magical_channel_name, category=category)
+        active_magical_channel = magical_channel.id
+        
+        print(f"Created magical channel: {magical_channel_name} under category {category_name}")
+
+        try:
+            await member.move_to(magical_channel)
+        except discord.errors.HTTPException as e:
+            print(f"Error moving user: {e}")
+
+        await portal_channel.delete()
+        print("Deleted 'Portal' channel.")
+        return
+
+    # Case 2: User leaves the active magical channel
+    if active_magical_channel:
+        magical_channel = guild.get_channel(active_magical_channel)
+        if magical_channel and len(magical_channel.members) == 0:
+            await magical_channel.delete()
+            active_magical_channel = None
+            print(f"Deleted magical channel: {magical_channel.name}")
+
+            # Recreate the '🪞Portal' channel
+            await guild.create_voice_channel(PORTAL_NAME, category=category)
+            print("Recreated 'Portal' channel.")
 
 bot.run(TOKEN)
