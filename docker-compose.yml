@@ -1,0 +1,18 @@
+services:
+  computah:
+    image: python:3.12.6-slim
+    container_name: computah-bot
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+    command: python bot.py
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file: #This is for your Token
+    - .env
+    entrypoint: >
+      sh -c "apt-get update &&
+             apt-get install -y ffmpeg &&
+             pip install --no-cache-dir -r requirements.txt &&
+             python bot.py"
